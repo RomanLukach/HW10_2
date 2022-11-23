@@ -9,6 +9,7 @@ function groups (array) {
         if (x1.date > x2.date) return 1;
         return array[g][0]}
         )      
+        console.log(`Congratulate student ${array[g][0].name}`)        
         topStudents.push(array[g][0]);
     }
 //    console.log(topStudents)

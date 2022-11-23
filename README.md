@@ -12,23 +12,13 @@
 
 Provided scripts are for *Home Work 10.2* in *"QA инженер. Полная автоматизация"* course provided by [ITSwitcher](https://it-switcher.online/).
 Provided scripts are written on [JavaScript](https://www.ecma-international.org/publications-and-standards/standards/ecma-262/) and performs following tasks:
-- topStudentAll.js - search of top student in all groups in students-data.json
-- topStudentGroup.js - search of top student in each groups in students-data.json
-- topStudentAll.test.js - test topStudentAll.js functionality
 
-Script topStudentAll.js works as following:
-1. Script imports students list distributed by groups from students-data.json file
-2. Script make new database file with all students 
-3. Script sort all students by scores (dessending) and by Date (assending)
-4. Student with highest score and earliest date nominated as top student.
-5. Script make greeting for top student
+- showTopStudentinGroup.js - search of top student in each groups in students-data.json
 
-Script topStudentGroup.js works as following:
+Script showTopStudentinGroup.js works as following:
 1. Script imports students list distributed by groups from students-data.json file
-3. Script sort all students by scores (dessending) and by Date (assending) within a group
-4. Script check that
-- if top student in the group has score above "0", then script make greeting for this student.
-- if score of top student in the group equal to "0", then script will print "No group winner. Nobody has scores above 0."
+2. Script sort all students by scores (dessending) and by Date (assending) within a group
+
 
 ## Pre-requisites
 The following programs and SW packages should be installed to prior of script tests.
