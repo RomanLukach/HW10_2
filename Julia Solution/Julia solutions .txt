@@ -1,0 +1,156 @@
+Роман, здравствуйте.
+С ошибкой не смогу сейчас разобраться - ухожу на звонки. Постараюсь позже к этому вернуться, если у Вас не получится быстрее меня
+
+Я знаю, что Вам нравится самому находить ответ. И не нравится - когда я даю какие-то готовые ответы.
+Давайте на примере покажу, что может быть разная реализация
+
+
+Самое короткое решение (массив с набором тестовым данных находится в файле test_data.json):
+
+в файле с кодом script.js:
+
+-------------------------------------------------
+function lookForBestStudent(ar) {
+  let goal = ar[0];
+  let max = ar[0].score;
+
+  ar.forEach((element) => {
+    if (element.score >= max && element.date < goal.date) {
+        max = element.score;
+        goal = element;
+    }
+  });
+  console.log(
+    Лучший результат: ${max} у студента ${goal.name} - поздравляем!
+  );
+  return goal.name;
+}
+
+module.exports = lookForBestStudent;
+-------------------------------------------------
+В файле script.test.js
+-------------------------------------------------
+const lookForBestStudent = require("./test.js");
+const data = require ("./test_data.json");
+
+describe("test", () => {
+  it.each([
+    [data[0], "Ivan"],
+    [data[1], "Marina"],
+    [data[2], "Varvara"],
+  ])("Test %#", (data, result) => {
+    expect(lookForBestStudent(data)).toEqual(result);
+  });
+});
+
+-------------------------------------------------
+
+Вариант 2
+- массив тестовых данных в файле js
+
+-------------------------------------------------
+let groupsOfStudents = [
+  [
+    { name: "Ivan", score: 35, date: "2022-10-11" },
+    { name: "Maria", score: 5, date: "2022-10-10" },
+    { name: "Olga", score: 0, date: "" },
+    { name: "Stepan", score: 35, date: "2022-10-12" },
+    { name: "Oleg", score: 9, date: "2022-10-01" },
+    { name: "Zanna", score: 15, date: "2022-10-11" },
+  ],
+  [
+    { name: "Margo", score: 0, date: "2022-10-11" },
+    { name: "Natalia", score: 25, date: "2022-10-10" },
+    { name: "Marina", score: 25, date: "2022-10-01" },
+    { name: "Dmitry", score: 25, date: "2022-10-12" },
+    { name: "Denis", score: 0, date: "2022-10-02" },
+    { name: "Vadimyr", score: 1, date: "2022-10-11" },
+  ],
+  [
+    { name: "Irina", score: 0, date: "2022-10-11" },
+    { name: "Vasily", score: 0, date: "2022-10-10" },
+    { name: "David", score: 0, date: "2022-10-11" },
+    { name: "Kristina", score: 0, date: "2022-10-12" },
+    { name: "Varvara", score: 0, date: "2022-10-01" },
+    { name: "Tanya", score: 0, date: "2022-10-11" },
+  ],
+];
+
+let bestScore = 0;
+
+function calculationOfTheBestStudent(oneOfTheStudentGroups) {
+  bestScore = 0;
+  let bestStudentsNames = [];
+  let bestDate = new Date(0);
+
+  oneOfTheStudentGroups.forEach((e) => {
+    if (e.score > bestScore) {
+      bestScore = e.score;
+      bestDate = new Date(e.date);
+      bestStudentsNames = [];
+      bestStudentsNames.push(e.name);
+    } else if (e.score == bestScore) {
+      currentStudentDate = new Date(e.date);
+      if (currentStudentDate < bestDate) {
+        bestDate = currentStudentDate;
+        bestStudentsNames = [];
+        bestStudentsNames.push(e.name);
+      } else if (currentStudentDate.getTime() == bestDate.getTime()) {
+        bestStudentsNames.push(e.name);
+      }
+    }
+  });
+
+  return bestStudentsNames;
+}
+
+module.exports = calculationOfTheBestStudent;
+-------------------------------------------------
+в тестовом файле script_student.test.js:
+-------------------------------------------------
+const calculationOfTheBestStudent = require("./script_student");
+
+let groupsOfStudents = [
+  [
+    { name: "Ivan", score: 35, date: "2022-10-11" },
+    { name: "Maria", score: 5, date: "2022-10-10" },
+    { name: "Olga", score: 0, date: "" },
+    { name: "Stepan", score: 35, date: "2022-10-12" },
+    { name: "Oleg", score: 9, date: "2022-10-01" },
+    { name: "Zanna", score: 15, date: "2022-10-11" },
+  ],
+  [
+    { name: "Margo", score: 0, date: "2022-10-11" },
+    { name: "Natalia", score: 25, date: "2022-10-10" },
+    { name: "Marina", score: 25, date: "2022-10-01" },
+    { name: "Dmitry", score: 25, date: "2022-10-12" },
+    { name: "Denis", score: 0, date: "2022-10-02" },
+    { name: "Vadimyr", score: 1, date: "2022-10-11" },
+  ],
+  [
+    { name: "Irina", score: 0, date: "2022-10-11" },
+    { name: "Vasily", score: 0, date: "2022-10-10" },
+    { name: "David", score: 0, date: "2022-10-11" },
+    { name: "Kristina", score: 0, date: "2022-10-12" },
+    { name: "Varvara", score: 0, date: "2022-10-01" },
+    { name: "Tanya", score: 0, date: "2022-10-11" },
+  ],
+];
+
+describe("Проверка групп", () => {
+  it.each([
+    [groupsOfStudents[0], ["Ivan"]],
+    [groupsOfStudents[1], ["Marina"]],
+    [groupsOfStudents[2], []],
+  ])("В группе студентов: %o лучший результат: %s", (a, result) => {
+    expect(calculationOfTheBestStudent(a)).toEqual(result);
+  });
+});
+-------------------------------------------------
+Roman Lukach — Today at 12:51 PM
+Юлия, спасибо, Буду разбираться. Но уже не сегодня! Задание сдать не успею ни это ни 10.2.
+А в 3 группе ведь не может быть победителя! ТАм у всех 0!
+
+
+
+1. Неправильное понимание работы функции forEach!  
